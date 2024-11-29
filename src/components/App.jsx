@@ -1,16 +1,29 @@
-export const App = () => {
+import React, { useState } from 'react';
+import Feedback from './Feedback';
+
+const App = () => {
+  const [feedbackList, setFeedbackList] = useState([]);
+
+  const handleAddFeedback = newFeedback => {
+    setFeedbackList(prev => [...prev, newFeedback]);
+  };
+
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
+    <div className="appContainer">
+      <h1>Feedback Widget</h1>
+      <Feedback onAddFeedback={handleAddFeedback} />
+      <div>
+        <h3>Feedback List</h3>
+        <ul>
+          {feedbackList.map((feedback, index) => (
+            <li key={index}>
+              Rating: {feedback.rating} | Feedback: {feedback.feedback}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
+
+export default App;
